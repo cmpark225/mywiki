@@ -9,6 +9,13 @@ RequestFactory의 API는 test client API의 약간 제한적인 하위 집합이
 
 # Request vs Client
 
+RequestFactory 는 request를 리턴하고,
+Client는 response를 리턴한다.
+
+Client는 완벽한 request-response cycle을 fake로 사용한다. 
+
+=======================================================
+
 RequestFactory and Client have some very different use-cases. To put it in a single sentence: RequestFactory returns a request, while Client returns a response.
 
 The RequestFactory does what it says - it's a factory to create request objects. Nothing more, nothing less.
