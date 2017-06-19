@@ -1,1 +1,2 @@
-[Request vs Client](tests/Request-vs-Client)
+- [Request vs Client](tests/Request-vs-Client)
+- [JSON-Schema](tests/Json-schema)
