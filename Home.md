@@ -1,2 +1,2 @@
-[Tests](tests)
-[Django](django)
+* [Tests](tests)
+* [Django](django)
