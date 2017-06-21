@@ -2,4 +2,4 @@
 
 ### The basics
 
-* [URLconfs](urlconfs)
+* [URLconfs](django/urlconfs)
