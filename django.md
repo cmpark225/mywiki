@@ -1,6 +1,5 @@
-
 ## The view layer
 
 ### The basics
 
-[URLconfs](urlconfs)
+* [URLconfs](urlconfs)
