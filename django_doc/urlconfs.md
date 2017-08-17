@@ -71,6 +71,16 @@ URLconf는 request method를 보지 않는다. 즉 모든request method는 동�
 
 ### patterns
 
+함수는 prefix와 임의의 URL 패턴을 받는다. 그리고 Django에 맞는  패턴의 URL 리스트를 반환한다. 
+patterns()의 첫번째 인수는 prefix 문자열이다. 남은 인수는 아래 포맷의 튜플이다. :
+
+```
+(regular expression, Python callback function [, optional dictionary [, optional name]])
+```
+
+optional dictionary와 optional name은 선택적이다. 
+
+
 ### url
 
 ### include
