@@ -23,6 +23,22 @@ LOCALE_PATHS = (
 
 일반적인 '/ path / to / locale / xx / LC_MESSAGES' 계층 구조가있는 경우 locale 디렉토리 경로 (예 : '/ path / to / locale')를 사용해야한다.
 
+## MEDAI_ROOT
+
+Default: ' ' (Empty string)
+
+설치에 대한 미디어 파일 보관를 위한 디렉토리의 절대 경로
+
+Example: "/home/media/media.lawrence.com/"
+
+## MEDIA_URL
+
+Default: ' ' (Empty string)
+
+MEDIA_ROOT에서 제공되는 미디어를 처리하는 URL
+
+Example: "http://media.lawrence.com/"
+
 ## USE_I18N
 
 Default: True
