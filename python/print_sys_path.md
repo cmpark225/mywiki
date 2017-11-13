@@ -3,6 +3,7 @@ import sys
 for path in sys.path: print path
 ```
 
+```
 /usr/lib/python2.7
 /usr/lib/python2.7/plat-x86_64-linux-gnu
 /usr/lib/python2.7/lib-tk
@@ -11,3 +12,4 @@ for path in sys.path: print path
 /usr/local/lib/python2.7/dist-packages
 /usr/lib/python2.7/dist-packages
 /usr/lib/python2.7/dist-packages/gtk-2.0
+```
