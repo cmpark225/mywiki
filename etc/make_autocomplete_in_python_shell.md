@@ -13,7 +13,7 @@ else:
     readline.parse_and_bind("tab: complete")
 ```
 
-## Add export to .bashrc file
+## Add export code to .bashrc file
 
 ```
 export PYTHONSTARTUP=~/.pythonrc
