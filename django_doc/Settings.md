@@ -42,6 +42,7 @@ Example: "http://media.lawrence.com/"
 ## TEMPLATE_DIRS
 
 Default: () (Empty tulpe)
+
 django.template.loaders.filesystem.Loader가 검색 한 템플릿 소스 파일의 위치를 검색순서대로 나열한  목록 
 
 
