@@ -39,6 +39,25 @@ MEDIA_ROOT에서 제공되는 미디어를 처리하는 URL
 
 Example: "http://media.lawrence.com/"
 
+## TEMPLATE_DIRS
+
+Default: () (Empty tulpe)
+django.template.loaders.filesystem.Loader가 검색 한 템플릿 소스 파일의 위치를 검색순서대로 나열한  목록 
+
+
+경로는 윈도우에서도 Unix 스타일인 슬래시를 사용해야 한다.
+
+## TEMPLATE_LOADERS
+
+Default:
+
+```
+('django.template.loaders.filesystem.Loader',
+'django.template.loaders.app_directories.Loader')
+```
+
+string으로 명시된 템플릿 로더 클래스의 튜플. 각각의 로더 클래스는 특정 소스에서 템플릿을 가져 오는 방법을 알고 있다. 선택적으로 문자열 대신 튜플을 사용할 수 있다. 튜플의 첫 번째 항목은 로더의 모듈이어야 하며 초기화하는 동안 후속 항목이 로더에 전달된다.
+
 ## USE_I18N
 
 Default: True
