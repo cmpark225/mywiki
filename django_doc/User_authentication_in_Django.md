@@ -44,3 +44,36 @@ DB에 해당 user에 대한 password 값이 !로 저장된것을 확인할 수 �
 False
 ```
 
+
+#### Manager functions
+
+class models.UserManager
+
+User 모델은 아래의 help function인 custmom manager를 가진다:
+
+##### create_user(username, email, password=None)
+
+생성, 저장, 그리고 User를 리턴한다.
+
+username과 password를 입력한 값으로 설정한다.  도메인을 자동으로 소문자로 설정한다. 그리고 User object는 is_active가 True인 상태로 return 된다. 
+
+password가 없을 경우 set_unusable_password()가 호출된다.
+
+
+### Basic usage
+
+#### Creating users
+
+user를 생성하는 가장 기본적인 방법은 django에서 제공하는 create_user() helper function을 사용하는 것이다.
+
+```
+>>> from django.contrib.auth.models import User
+>>> user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
+
+# 이 시점에 user는 이미 데이터베이스에 저장된 user object이다.
+# 다른 field를 변경하고 시을 경우 attributes 변경이 가능하다.
+>>> user.is_staff = True
+>>> user.save()
+```
+
+
