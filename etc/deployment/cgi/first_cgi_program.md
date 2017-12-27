@@ -71,7 +71,13 @@ http://www.example.com/cgi-bin/first.pl
 or wherever you put your file, you will see the on line Hello, World. appear in your browser window. It's not very exciting, but once you get that working, you'll have a good chance of getting just about anything working.
 
 
+## But it's still not working
 
+There are four basic things that you may see in your browser when you try to access your CGI program from the web:
+
+### The output of your CGI program
+
+    Great! That means everything worked fine. If the output is correct, but the browser is not processing it correctly, make sure you have the correct Content-Type set in your CGI program.
 refer:
 
 https://httpd.apache.org/docs/2.2/en/howto/cgi.html#configuring
