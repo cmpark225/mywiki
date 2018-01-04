@@ -17,5 +17,5 @@ True일 경우 Django는 데이터베이스에 빈 값을 NULL로 저장한다. 
 
 True일 경우 필드는 blank를 허용한다. Default는 False. 
 
-null과는 다르다. null은 데이터베이스와 연관되어 있고, blank는 유효성과 연관되어 있다.
+null과는 다르다. **null은 데이터베이스와 연관되어 있고, blank는 유효성과 연관되어 있다.**
 field가 blank=True라면 *Django admin 페이지에서* 유효성 검사 시 빈 값을 허용한다. field가 blank=False일 경우 필요한 필드이다.
