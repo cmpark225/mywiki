@@ -14,4 +14,5 @@ syncdb 는 설치되지 않은 모델에 대해서만 테이블을 생성한다.
 모델을 변경하고 일치시킬 데이터베이스 테이블을 변경하려면 sql 명령을 사용하여 새 SQL 구조를 표시하고 이를 기존 테이블의 스키마와 비교하여 변경 사항을 해결해야 한다.
 
 The --noinput option may be provided to suppress all user prompts.
+
 The --database option can be used to specify the database to synchronize.
