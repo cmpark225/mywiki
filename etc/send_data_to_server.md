@@ -14,3 +14,4 @@ urlparse(parse_qsl)
 $http
 $download
 $ajax
+http://api.jquery.com/jquery.ajax/#sending-data-to-server
