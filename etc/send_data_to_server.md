@@ -1,11 +1,11 @@
 
-history 요청하는 경우가 두가지가 있는데.
+실제 product에서 history 요청하는 경우가 두가지가 있는데.
 
-• 데이터 요청
-• csv 파일로 요청
+* 데이터 요청
+* csv 파일로 요청
 
-실제 product에서 첫번째 경우는 데이터를 인코딩 해서 보내야 했는데,
- 두번째 경우는 데이터를 인코딩해서 보내면 제대로 된 결과를 받을 수 가 없었다.
+첫번째 경우는 데이터를 인코딩 해서 보내야 했는데,
+두번째 경우는 데이터를 인코딩해서 보내면 제대로 된 결과를 받을 수 가 없었다.
 
 처음에는 Django에서 HttpRequest를 만들 때  
 http 헤더 값에 따라서  URL 디코딩을 결정하여 
@@ -33,6 +33,8 @@ data를 string이나 object 형태로 보낼 수 있는데,
 string으로 전송할 경우에는 urlencoding 없이 데이터를 전송하고,
 object로 전송할 경우에는 서버로 데이터 요청하기 전에 urlencoding을 한 후 전송하고 있다.
 
-The data option can contain either a query string of the form key1=value1&key2=value2, or an object of the form {key1: 'value1', key2: 'value2'}. If the latter form is used, the data is converted into a query string using jQuery.param() before it is sent. This processing can be circumvented by setting processData to false. The processing might be undesirable if you wish to send an XML object to the server; in this case, change the contentType option from application/x-www-form-urlencoded to a more appropriate MIME type.
-
 http://api.jquery.com/jquery.ajax/#sending-data-to-server
+
+> The data option can contain either a query string of the form key1=value1&key2=value2, or an object of the form {key1: 'value1', key2: 'value2'}. If the latter form is used, the data is converted into a query string using jQuery.param() before it is sent. This processing can be circumvented by setting processData to false. The processing might be undesirable if you wish to send an XML object to the server; in this case, change the contentType option from application/x-www-form-urlencoded to a more appropriate MIME type.
+
+
