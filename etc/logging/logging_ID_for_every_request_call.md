@@ -1,9 +1,39 @@
 
+## Logging ID for every request call
+
+API에서 기록하고 있는 로그를 각 request별로 구별하기 위해 request마다 ID 추가가 필요하였다.
+
+처음에는 Log4j의 wrapper 함수를 생성하여 생성자에서 ID를 넘겨 받고 그 ID를 이용해서 log를 기록하도록 수정하였다.
+하지만 ID를 상위 클래스로 계속 넘겨줘야 했고(super(id)), 다음 개발자가 래퍼 함수를 사용한다는 보장이 없었다. 무엇보다 기존에 Log4j를 사용하고 있는 모든 소스를 래퍼 함수로 변경하는 작업이 있었다.
+
+그래서 request별로 ID를 저장할 새로 를 생성하였다. 
+해당 필터 통과시 ID를 만들어 MDC에 저장하고, Log4j.properties에는 해당 키로 pattern을 추가하여 %X{ID} 로그 기록 시 항상 ID도 같이 남기도록 수정하였다.
+
 ## What is Log4j MDC (Mapped Diagnostic Context)
 
 To put it simple, the MDC is a map which stores the context data of the particular thread where the context is running. To explain it, come back to our simple application - every client request will be served by different thread of the MyServlet. So, if you use log4j for logging, then each thread can have it’s own MDC which is  global to the entire thread. Any code which is part of that thread can easily access the values that are present in thread’s MDC.
 
 So, how do we make MDC to differentiate logging statements from multiple clients? Simple : Before starting any business process in your code, get the user name (for our Servlet, we can get it from request object) and put that into MDC. Now the user name will be available to the further processing. In your log4j.properties while defining the conversionPattern, add a pattern %X{key} to retrievce the values that are present in the MDC. The key will be userName in our example. It’s like getting a value from a Session object.
+
+## NDC vs MDC
+
+NDC(Nested Diagonostic Context)는 stack이고 
+MDC(Mapped Diagnostic Context)는 맵이다.
+두가지 모두  context는 스레드 마다 포함된다. 
+the context is stored per thred. Each thread could use the same key but have different stored values
+
+NDC의 경우 '%x'를 이용해 로그를 기록하고,
+MDC의 경우 '%X{key}'를 이용해 로그를 기록한다.
+
+https://wiki.apache.org/logging-log4j/NDCvsMDC
+
+## Filter
+
+필터를 이용한 웹 프로그래밍 Part1, 필터란 무엇인가!
+[http://javacan.tistory.com/entry/58]
+
+Understanding and Using Servlet Filters
+[http://otndnld.oracle.co.jp/document/products/as10g/101300/B25221_03/web.1013/b14426/filters.htm]
 
 ## Example code
 
