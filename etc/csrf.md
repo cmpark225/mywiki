@@ -1,4 +1,6 @@
-# csrf (Cross Site Rrequest forgery, CSRF,XSRF) 사이트 간 요청 위조
+# csrf (Cross Site Rrequest forgery, CSRF,XSRF) 
+
+사이트 간 요청 위조
 
 인증된 사용자를 이용한 공격 방식. 
 
@@ -22,6 +24,8 @@ ex)
 <script> document.forms[0].send.click(); </script>
 ```
 
+
+https://github.com/pillarjs/understanding-csrf/pull/10/files?short_path=2c41220
 
 
 ## django에서 CSRF 공격 막는 방법
