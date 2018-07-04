@@ -2,12 +2,27 @@
 
 commit 메시지가 중복으로 표시되는 문제(?)가 발생.
 
+확인해보니 git book의 브랜치 rebase 하기 참조에서도 하지 말라고 나옴 ㅠㅠ [link](https://git-scm.com/book/ko/v2/Git-%EB%B8%8C%EB%9E%9C%EC%B9%98-Rebase-%ED%95%98%EA%B8%B0#r_rebase_peril)
 
-git book - 브랜치 rebase 하기 참조에서도 하지 말라고 나옴 ㅠㅠ [link](https://git-scm.com/book/ko/v2/Git-%EB%B8%8C%EB%9E%9C%EC%B9%98-Rebase-%ED%95%98%EA%B8%B0#r_rebase_peril)
 
-**일반적인 해답을 굳이 드리자면 로컬 브랜치에서 작업할 때는 히스토리를 정리하기 위해서 Rebase 할 수도 있지만, 리모트 등 어딘가에 Push로 내보낸 커밋에 대해서는 절대 Rebase 하지 말아야 한다.**
+> 일반적인 해답을 굳이 드리자면 로컬 브랜치에서 작업할 때는 히스토리를 정리하기 위해서 Rebase 할 수도 있지만, 리모트 등 어딘가에 Push로 내보낸 커밋에 대해서는 절대 Rebase 하지 말아야 한다.
 
-rebase한 경우와 merge한 경우 commit 메시지 중복 확인을 위해 테스트 진행. 
+https://stackoverflow.com/questions/9264314/git-commits-are-duplicated-in-the-same-branch-after-doing-a-rebase/27708147#27708147
+
+에서는 feature branch 나 developer branch에서 혼자 작업할 경우 
+
+```
+$ git push --force
+```
+명령어를 이용해 리모트 브랜치를 업데이트 하라고 한다.
+
+
+
+# Test 진행
+
+원인 파악을 위해 rebase한 경우와 merge한 경우 
+
+commit 메시지가 중복되는 경우를 확인해보았다.
 
 1, 2, 3번 까지는 동일하게 진행 하고,
 
@@ -20,7 +35,7 @@ rebase한 경우와 merge한 경우 commit 메시지 중복 확인을 위해 테
 3. origin/dev
 4. dev (local)
 
-# Test 진행
+
 ### 1. make a new branch to develop new feature
 
 C2 까지 커밋 완료 상태에서 
