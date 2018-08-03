@@ -1,9 +1,9 @@
 Django and Apache로 배포하기
 
 사용 버전
-OS => ubuntu 16.04
-Django => 1.3.7
-apache => 2.4.18
+* OS => ubuntu 16.04
+* Django => 1.3.7
+* apache => 2.4.18
 
 
 1. wsgi 파일 생성
