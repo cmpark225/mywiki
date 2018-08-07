@@ -1,3 +1,7 @@
+
+apache와 연동 후
+vhost접속 시도 시 
+
 sqlite3: attempt to write a readonly database
 
 
