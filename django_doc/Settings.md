@@ -1,3 +1,17 @@
+## ADMINS
+
+Default: () (빈 튜플 값)
+
+에러 알림 받을 관리자 리스트. DEBUG=False일때 exception 이 발생하면 예외에 관한 정보를 이메일로 보낸다
+
+각 멤버는 (Full name, email address)의 튜플형식의 튜플로 이뤄진다
+
+EX:
+```
+(('John', 'john@example.com'), ('Mary', 'mary@example.com'))
+```
+Note: Django는 에러가 발생할때마다 해당 사용자에게 메일을 보낸다.
+
 ## APPEND_SLASH
 
 Default: True
