@@ -15,7 +15,9 @@ A API에는 X하고 언더바로 헤더를 추가하였고,
 
 B API에서는 X하고 하이픈으로 헤더를 추가했다.
 
-A, B 의 request 확인해보니 모두 X_MY_HEADER로 헤더가 정의 되어 있었다.
+A, B 의 request 확인해보니 모두 HTTP_X_MY_HEADER로 헤더가 정의 되어 있었다.
+
+request의 custom header가 어떻게 HTTP_X_MY_HEADER로 변경 되었는지, 맞는 네이밍 규칙은 무엇인지 확인해보았다.
 
 
 ## Django - HttpRequest.META
@@ -49,6 +51,7 @@ https://django.readthedocs.io/en/1.3.X/ref/request-response.html?#django.http.Ht
 CONTENT_LENGTH 와 CONTENT_TYPE을 제외하고 request의 HTTP 헤더는 
 
 모두 대문자로, 하이픈은 언더바로 변경되고, HTTP_ prefix가 추가되어 META KEY로 변경된다.
+
 
 ## Custom Http Header Naming Convention
 
