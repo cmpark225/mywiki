@@ -5,7 +5,9 @@
 header 이름을 다르게 정의해도 각 API에서 헤더 값을 가져오는데는 문제가 없었다.
 
 ex)
+
 A API -> X_MY_HEADER : 1234
+
 B API -> X-MY_HEADER : 1234
 
 
