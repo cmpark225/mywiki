@@ -6,9 +6,11 @@ ubuntu 16.04
 ```
 $ sudo apt-get update
 $ sudo apt-get install mysql-server
+$ sudo apt-get install libmysqlclient-dev
 ```
 설치 시 root 비밀번호를 물어본다.
 
+(libmysqlclient-dev는 pip로 mySQL-python 설치 시   EnvironmentError: mysql_config not found 발생해서 설치함)
 
 ## 2. Mysql 서버 시작
 ```
