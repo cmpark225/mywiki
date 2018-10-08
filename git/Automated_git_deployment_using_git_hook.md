@@ -104,4 +104,4 @@ post-receive에 설정한 TARGET 위치에 가면 push한 내용이 반영된 �
 
 ref
 * https://www.digitalocean.com/community/tutorials/how-to-set-up-automatic-deployment-with-git-with-a-vps
-* 
+* https://gist.github.com/noelboss/3fe13927025b89757f8fb12e9066f2fa
