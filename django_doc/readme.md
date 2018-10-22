@@ -7,6 +7,8 @@
 * **QuerySets** : [Executing_queries](https://github.com/sally225/mywiki/blob/master/django_doc/The%20model%20layer/Executing_queries.md) | [QuerySet method reference](https://github.com/sally225/mywiki/blob/master/django_doc/The%20model%20layer/QuerySet_method_reference.md)
 
 # The template layer
+* **For designers**: [Syntax overview](https://github.com/sally225/mywiki/tree/master/django_doc/The%20template%20layer)|Built-in tags and filters
+* **For programmers**: Template API | Custom tags and filters
 
 # The view layer
 * **The basics**: [URLconfs](https://github.com/sally225/mywiki/blob/master/django_doc/urlconfs.md) | Veiw functions | Shortcuts | Decorators
