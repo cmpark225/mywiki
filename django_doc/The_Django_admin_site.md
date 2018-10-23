@@ -1,4 +1,118 @@
 
+## ModelAdmin objects
+
+### ModelAdmin options
+**ModelAdmin.list_display**
+admin의 change list 페이지에서 표시되는 필드들을 컨드롤하기 위해 list_display를 설정한다. 
+
+EX:
+```
+list_display = ('first_name', 'last_name')
+```
+만약 list_display를 설정하지 않았을 경우 admin 사이트는 각 오브젝트의 __unicode__() 값을 컬럼 한개로 표시할 것이다.
+
+list_display에서 사용할 수 있는 네가지 값(방법)이 있다.
+* 모델의 필드명. 예:
+```
+class PersonAdmin(admin.ModelAdmin):
+  list_display = ('first_name', 'last_name')
+```
+*  모델 인스턴스에 대해 하나의 매개 변수를 허용하는 호출 가능 객체. 예:
+```
+def upper_case_name(obj):
+  return ("%s %s" % (obj.first_name, obj.last_name)).upper()
+upper_case_name.short_description = "Name"
+
+class PersonAdmin(admin.ModelAdmin):
+  list_display = (upper_case_name, )
+```
+* 문자열은 ModelAdmin의 속성을 표시한다. callable과 동일하게 동작한다 예:
+```
+class PersonAdmin(admin.ModelAdmin):
+  list_display = ('upper_case_name', )
+
+  def upper_case_name(self, obj):
+  return ("%s %s" % (obj.first_name, obj.last_name)).upper()
+upper_case_name.short_description = "Name"
+```
+* 모델의 속성을 나타내는 문자열입니다. 이 함수는 호출 가능 함수와 거의 동일하게 동작하지만이 컨텍스트에서는 모델 인스턴스를 가리킨다. 아래는 완전한 모델 예제이다.
+```
+class Person(models.Model):
+  name = models.CharField(max_length=50)
+  birthday = models.DateField()
+
+  def decade_born_in(self):
+    return self.birthday.strftime("%Y")[:3] + "0's"
+  decate_born_in.short_description = "Birth decade"
+
+class PersonAdmin(admin.ModelAdmin):
+  list_display = ('name', 'decade_born_in')
+```
+
+list_display에 대해 몇가지 특별한 경우가 있다:
+
+* 만약 필드가 ForeignKey 라면 Django는 관련된 오브젝트의 __unicode()__ 를 보여준다. 
+  
+* ManyToManyField 필드는 지원하지 않는다. 이는 테이블의 각 행에 대해 별도의 SQL 문을 실행해야 하기 때문이다. 그래도 해당 필드를 사용하고 싶다면. 모델에 사용자 정의 메소드를 추가하여 해당 메소드 이름을 list_display에 추가한다.(list_display의 커스텀 메소드는 아래 참조)
+  
+* 필드가 BooleanField 이거나 NullBooleanField일 경우 Django는 True, False 대신 'on', 'off' 아이콘을 표시한다.
+  
+* 모델의 메소드나 ModelAdmin의 호출가능한 메소드가 문자열로 주어지면, Django는 기본적으로 HTML-escape으로 출력한다. 메소드의 결과를 벗어나지 않으려면 이 메소드에 값이 True인 allow_tags 속성을 제공한다.
+완전한 모델 예제:
+```
+class Person(models.Model):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    color_code = models.CharField(max_length=6)
+
+    def colored_name(self):
+        return '<span style="color: #%s;">%s %s</span>' % (self.color_code, self.first_name, self.last_name)
+    colored_name.allow_tags = True
+
+class PersonAdmin(admin.ModelAdmin):
+    list_display = ('first_name', 'last_name', 'colored_name')
+```
+* 만약 주어진 문자열이 True나 False를 반환하는 모델의 메소드나 ModelAdmin의 호출가능한 메소드일 경우 Django는 "on", "off" 아이콘을 표시한다. 만약 메소드의 boolean속성에 True를 설정했을 경우에.
+  
+EX: 
+```
+class Person(models.Model):
+    first_name = models.CharField(max_length=50)
+    birthday = models.DateField()
+
+    def born_in_fifties(self):
+        return self.birthday.strftime('%Y')[:3] == '195'
+    born_in_fifties.boolean = True
+
+class PersonAdmin(admin.ModelAdmin):
+    list_display = ('name', 'born_in_fifties')
+```
+
+* __str __ () 및 __unicode __ () 메서드는 list_display에서 다른 모델 메서드와 마찬가지로 유효하므로이 작업을 수행해도 된다.:
+```
+list_display = ('__unicode__', 'some_other_field')
+```
+
+* 일반적으로 실제 데이터베이스 필드가 아닌 list_display 요소는 정렬에 사용할 수 없다.(Django는 데이터베이스 수준에서 모든 정렬을 수행하기 때문에)
+
+그러나 list_display의 요소가 특정 데이터베이스 필드를 나타내는 경우 항목의 admin_order_field 특성을 설정하여 이 사실을 나타낼 수 있습니다.
+
+EX:
+```
+class Person(models.Model):
+    first_name = models.CharField(max_length=50)
+    color_code = models.CharField(max_length=6)
+
+    def colored_first_name(self):
+        return '<span style="color: #%s;">%s</span>' % (self.color_code, self.first_name)
+    colored_first_name.allow_tags = True
+    colored_first_name.admin_order_field = 'first_name'
+
+class PersonAdmin(admin.ModelAdmin):
+    list_display = ('first_name', 'colored_first_name')
+```
+위의 코드는 Django가 관리자의 color_first_name으로 정렬 할 때 first_name 필드로 정렬하도록 지시한다.
+
 ## Overriding admin templates
 admin 모듈이 admin 사이트의 다양한 페이지를 생성하는 데 사용하는 많은 템플릿을 비교적 쉽게 재정의할 수 있다.특정 앱 또는 특정 모델에 대해 템플릿 중 일부를 재정의할 수도 있다.
 
