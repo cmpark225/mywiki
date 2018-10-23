@@ -7,7 +7,7 @@
 * **QuerySets** : [Executing_queries](https://github.com/sally225/mywiki/blob/master/django_doc/The%20model%20layer/Executing_queries.md) | [QuerySet method reference](https://github.com/sally225/mywiki/blob/master/django_doc/The%20model%20layer/QuerySet_method_reference.md)
 
 # The template layer
-* **For designers**: [Syntax overview](https://github.com/sally225/mywiki/tree/master/django_doc/The%20template%20layer)|Built-in tags and filters
+* **For designers**: [Syntax overview](https://github.com/sally225/mywiki/tree/master/django_doc/The%20template%20layer) | Built-in tags and filters
 * **For programmers**: Template API | Custom tags and filters
 
 # The view layer
@@ -20,7 +20,7 @@
 * **django-admin.py and manage.py**: [Overview](https://github.com/sally225/mywiki/blob/master/django_doc/ref/django-admin.py_and_manage.py.md) | Adding custom commands
 
 # Other batteries included
-* [Admin site](https://github.com/sally225/mywiki/blob/master/django_doc/The_Django_admin_site.md) | Admin actions | Admin documentation generator
-* [Authentication] (https://github.com/sally225/mywiki/blob/master/django_doc/User_authentication_in_Django.md)
+* [Admin site](https://github.com/sally225/mywiki/blob/master/django_doc/The_Django_admin_site.md) | [Admin actions](https://github.com/sally225/mywiki/blob/master/django_doc/Admin_actions.md) | Admin documentation generator
+* [Authentication](https://github.com/sally225/mywiki/blob/master/django_doc/User_authentication_in_Django.md)
 
 * [Web design helpers](https://github.com/sally225/mywiki/blob/master/django_doc/ref/controb/webdesign.md)
