@@ -1,3 +1,12 @@
+## Overview
+
+인증 시스템은 아래로 이루어져 있다.
+* Users
+* Permissions :  사용자가 특정 작업을 수행할 수 있는지에 대한 Binary flag(yes/no)
+* Groups: 둘 이상의 사용자에게 레이블 및 사용 권한을 적용하는 일반적인 방법
+
+
+
 ## Installation
 Django 어플리케이션의 django.contrib.auth에서 인증을 제공한다. 
 
@@ -25,12 +34,38 @@ User 오브젝트는 아래 필드를 포함한다.
 ### email
 ### password
 ### is_staff
+Boolean. 사용자가 admin site에 접근할 수 있는지에 대해 지정
+
 ### is_active
+Boolean. 해당 사용자가 active인지 지정. application이 foreign key를 가졌을 경우 외래키가 손생되지 않기 때문에 계정을 지우는 것 대신 해당 flag를 False 처리하는 것을 권한다.
+
+이것은 사용자가 로그인을 할 수 있는지 여부를 반드시 컨트롤하지는 않는다. 
+인증 backedns는 is_active flag를 검사할 필요가 없으므로, is_active가 False인 경우 로그인을 거부하려면 사용자가 자신의 login view에서 체크해야 한다. 그라니 login()뷰가 사용하는 AuthenticationForm은 has_perm과 같은 권한 검사 메소드와 장고 관리자의 인증처럼 이 검사를 수행한다. 이러한 모든 함수/메소드는 비활성 사용자에 대해 False를 반환한다.
+
 ### is_superuser
+Boolean. 명시적 지정 없이 모든 권한을 가졌는지에 대해 지정.
+
 ### last_login
+사용자의 마지막 로그인 시간. 현재 date/time을 기본 값으로 가짐.
+
 ### date_joined
+계정이 생겼을 때의 datetime 계정이 생성됐을 때 현재 date/time을 기본 값으로 가짐.
 
 ## Methods
+**class models.User**
+User 오브젝트는 두개의 many-to-many field를 가진다. : User.groups 와 user_permissions. User 오브젝트는 related object에 대해 Django model과 같은 방식으로 접근한다.
+```
+myuser.groups = [group_list]
+myuser.groups.add(group, group, ...)
+myuser.groups.remove(group, group, ...)
+myuser.groups.clear()
+myuser.user_permissions = [permission_list]
+myuser.user_permissions.add(permission, permission, ...)
+myuser.user_permissions.remove(permission, permission, ...)
+myuser.user_permissions.clear()
+```
+이러한 자동 API 메소드 외에도 User 객체에는 다음과 같은 맞춤 메소드가 있다.
+
 ### is_anonymous()
 항상 False를 반환한다. 이 메소드로 User와 AnonymousUser를 구분한다.
 
@@ -78,10 +113,18 @@ DB에 해당 user에 대한 password 값이 !로 저장된것을 확인할 수 �
 False
 ```
 
+### get_group_permissons(obj=None)
+### get_all_permissions(obj=None)
+### has_perm(perm, obj=None)
+### has_perms(perm_list, obj=None)
+### has_models_perms(package_name)
+### get_and_delete_messages()
+### email_user(subject, message, from_email=None)
+### get_profile()
 
 ## Manager functions
 
-class models.UserManager
+**class models.UserManager**
 
 User 모델은 아래의 help function인 custmom manager를 가진다:
 
@@ -137,6 +180,26 @@ Error: user 'user' does not exist
 
 password 속성을 직접 변경해서는 안된다. 
 
+
+###Storing additional information about users
+만약 사용자와 연관된 추가적인 정보를 저장하고 싶다면 Django는 이 목적을 위해 사이트 별 관련 모델을 지정하는 방법을 제공한다. ("user profile")
+
+이 기능을 사용하려면 저장할 추가 정보 또는 사용 가능한 추가 방법에 대한 필드가 있는 모델을 정의하고 모델에서 사용자 모델에 OneToOneField 사용자를 추가한다. 이렇게 하면 각 사용자에 대해 모델의 인스턴스(instance)를 하나만 생성할 수 있다. (추가 정보가 있는 model을 생성하고 User를 OneToOneField로 지정하라는 말인듯)
+
+이 모델이 특정 사이트에 대한 사용자 프로파일 모델임을 나타내려면 다음 항목으로 구성된 문자열로 AUTH_PROFILE_MODULE 설정을 입력한다:
+
+1. 사용자 프로파일 모델이 정의된 응용프로그램(대소문자 구분)이름. (즉 manage.py startapp으로 생성한 어플리케이션 이름 )
+2. model class 이름(대소문자 구분 안함.)
+
+예를들어 profile model의 이름이 UserProfile이고 accounts 어플리케이션 안에 정의 되었다면, 적절한 setting은 :
+```
+AUTH_PROFILE_MODULE = 'accounts.UserProfile'
+```
+사용자 프로파일 모델이 이 방법으로 정의되고 지정된 경우 각 User 개체에는 해당 User와 연결된 사용자 프로파일 모델의 인스턴스를 반환하는 메소드를 가진다 (get_profile())
+
+get_profile() 메소드는 없을 경우 profile을 생성하지 않는다. User model에 django.db.models.signals.post_save 신호에 대한 handler를 등록해야 하며 handler에서 created = True이면 연관된 사용자 프로파일을 작성해야 한다.
+
+
 ## Authentication in Web requests
 지금까지 문서에서는 인증 관련 오브젝트를 다루기 위해 필요한 저수준 API를 다뤘다. 더 높은 수준에서 Django는 이 인증 프레임워크를 request object 시스템에 연결할 수 있다.
 
@@ -150,6 +213,49 @@ if request.user.is_authenticated():
 else:
     # Do something for anonymous users.
 ```
+### How to log a user in
+
+Django는 django.contrib.auth:authenticate()와 login() 두개의 함수를 제공한다.
+
+**authenticate()**
+인증하기 위해 authenticate() 사용시 username과 password를 준다. 이것은 username, password 두개의 키워드 arguments를 취한다 그리고 주어진 username에 대해 password가 유효하다면 User object를 반환한다. 만약 password가 유효하지 않다면 authenticate()는 None을 반환한다. Ex:
+```
+from django.contrib.auth import authenticate
+user = authenticate(username='john', password='secret')
+if user is not None:
+    if user.is_active:
+        print "You provided a correct username and password!"
+    else:
+        print "Your account has been disabled!"
+else:
+    print "Your username and password were incorrect."
+```
+
+**login()**
+
+뷰에서 사용자 로그인을 위해 login()을 사용한다. 이것은 HttpRequest object와 User object를 취한다. login()은 Django의 세션 프레임워크를 이용해 user의 ID를 세션에 저장하므로 전에 언급한대로 session 미들웨어를 설치해야 한다. 
+
+아래 예는 authenticate()와 login() 둘다 사용하는지를 보여준다. :
+```
+from django.contrib.auth import authenticate, login
+
+def my_view(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = autenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            # Redirect to a success page.
+        else:
+            # Return a 'disabled account' error message
+    else:
+        # Return an 'Invalid login' error message.
+```
+
+>>> Calling authenticate() first
+>>> 수동으로 사용자를 로깅할 경우에는 login()호출하기 전에 authenticate()를 호출해야 한다. authenticate()는 인증 백엔드에서 해당 사용자를 성공적으로 인증한 속성을 사용자에게 설정한다. 이 정보는 로그인 프로세스 중에 나중에 필요하다. 
+
 
 ### Limiting access to logged-in users
 
@@ -185,7 +291,7 @@ def my_view(request):
 
 login_required()는 아래와 같이 수행한다.
 
-* 만약 사용자가 로그인이 안되어 있을 경우 현재 경로르르 query string으로 전달하여 settigns.LOGIN_URL로 리디렉션 시킨다 ex) /accounts/login/?next=/polls/3/.
+* 만약 사용자가 로그인이 안되어 있을 경우 현재 경로를 query string으로 전달하여 settigns.LOGIN_URL로 리디렉션 시킨다 ex) /accounts/login/?next=/polls/3/.
 * 로그인 되어 있다면 view를 실행한다. view는 사용자가 로그인 되어있다고 가정한다. 
 
 기본적으로 인증에 성공하면 사용자를 리디렉션해야 하는 경로는 query string의 'next' param에 저장된다. next 대신 다른 이름을 사용하려면 login_required()의 redirect_field_name 매개변수를 사용한다 
