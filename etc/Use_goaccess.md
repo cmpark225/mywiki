@@ -88,7 +88,7 @@ $ goaccess -f other_vhosts_access.log > index.html
 ```
 
 뒤에 > filename 을 붙여주면 html 형식으로 파일을 생성해준다.
-![terminal](/etc/images/goaccess_html.png)
+![html](/etc/images/goaccess_html.jpeg)
 
 
 # conf 수정 없이 바로 출력
