@@ -141,3 +141,59 @@ api의 경우 form 을 사용하지 않기 때문에 csrf 사용이 필요 없�
 csrf_exempt 데코레이터를 이용해 
 
 csrf 체크를 하지 않도록 할 수 있다.
+
+
+
+# Django에서 csrf 토큰을 확인하는 방식
+
+## GET 요청
+csrf 토큰을 처리하는 순서 대로 크게 3가지로 구분할 수 있다.
+
+(request 미들웨어, 뷰, response 미들웨어)
+
+### 1. request 미들웨어
+
+request.META['CSRF_COOKIE']를 설정한다.
+
+: 쿠키에 csrftoke(settings.CSRF_COOKIE_NAME 값)이 있는지 체크한다.
+
+쿠키에 csrftoke이 없을 경우에는 토큰을 새로 생성하고 cookie_is_new도 True로 설정한다.
+
+
+### 2. 뷰
+
+RequestContext를 이용하여 csrf_token 값을 전달한다. (위 내용의 옆 부분 참고 - 3.  뷰에서 'django.core.context_processors.csrf' 사용을 보장해줘야 한다.  아래 두가지 방법 중 하나 사용할 수 있음.)
+
+리턴 값으로 {"csrf_toke":'dsfjalskfdsa'}을 전달함으로써
+
+템플릿에서 
+
+{% csrf_token %}을 이용 form 에 csrf 값을 hidden으로 세팅할 수 있다.
+
+
+### 3. response 미들웨어
+csrf token을 사용할 경우. (뷰에서 ReqeustContext를 통해 csrf 설정 시 사용 여부가 설정된다. CSRF_COOKIE_USED=True)
+
+쿠키에 csrf_token값을 저장한다.
+
+
+
+## POST 요청
+
+### request 미들웨어
+
+쿠키에서 CSRF_COOKIE값을 가져온다. 
+
+쿠키에서 가져온 값과 Form에서 보내온 값이 맞는지 비교한다.
+
+Form에서 가져온 값이 없을 경우에는 헤더 값을 잠조한다.
+
+ 
+
+
+
+
+
+
+
+   
