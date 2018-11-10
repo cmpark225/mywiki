@@ -104,5 +104,33 @@ CACHES = {
 
 데이터베이스 캐싱은 빠르고 인덱스가 잘된 데이터베이스 서버를 가지고 있다면 가장 잘 동작한다.
 
+#### Database caching and multiple databases
+여러 데이터베이스에서 데이터베이스 캐싱을 사용하는 경우 데이터베이스 캐시 테이블에 대한 라우팅도 설정해야 한다. 라우팅을 위해 데이터베이스 캐시 테이블은 django_cache라는 응용 프로그램에 CacheEntry라는 모델로 나타낸다. 이 모델은 모델 캐시에 나타나지 않지만 모델 정보는 라우팅 목적으로 사용될 수 있다.
 
+예를 들어, 다음 라우터는 모든 캐시 읽기 작업을 cache_slave로 지정하고 모든 쓰기 작업을 cache_master로 보낸다. 캐시 테이블은 cache_master로 부터만 싱크될 것이다.:
 
+```
+class CacheRouter(object):
+    """A router to control all database cache operations"""
+
+    def db_for_read(self, model, **hints):
+        "all cache read operations go to the slave"
+        if model._meta.app_label in ('django_cache', ):
+            return 'cache_slave'
+        return None
+
+    def db_for_write(self, model, **hints):
+        "All cache write operations go to master"
+        if model._meta.app_label in ('django_cache',):
+            return 'cache_master'
+        return None
+
+    def allow_syncdb(self, db, model):
+        "Only synchronize the cache model on master"
+        if model._meta.app_label in ('django_cache',):
+            return db == 'cache_master'
+        return None
+```
+데이터베이스 캐시 모델에 대한 라우팅 경로를 지정하지 않으면 캐시 백엔드는 기본 데이터베이스를 사용한다.
+
+물론 데이터베이스 캐시 백엔드를 사용하지 않는 다면 데이터베이스 캐시 모델에 대한 라우팅 지침 제공에 대해 걱정할 필요가 없다.
