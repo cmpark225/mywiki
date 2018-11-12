@@ -19,6 +19,9 @@
 * **settings**: Overview | [Full list of settings](https://github.com/sally225/mywiki/blob/master/django_doc/Settings.md)
 * **django-admin.py and manage.py**: [Overview](https://github.com/sally225/mywiki/blob/master/django_doc/ref/django-admin.py_and_manage.py.md) | Adding custom commands
 
+#Forms
+* **The basics**: [Overview](https://github.com/sally225/mywiki/blob/master/django_doc/forms/overview.md)
+
 # Other batteries included
 * [Admin site](https://github.com/sally225/mywiki/blob/master/django_doc/The_Django_admin_site.md) | [Admin actions](https://github.com/sally225/mywiki/blob/master/django_doc/Admin_actions.md) | Admin documentation generator
 * [Authentication](https://github.com/sally225/mywiki/blob/master/django_doc/User_authentication_in_Django.md)
