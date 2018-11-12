@@ -19,7 +19,7 @@
 * **settings**: Overview | [Full list of settings](https://github.com/sally225/mywiki/blob/master/django_doc/Settings.md)
 * **django-admin.py and manage.py**: [Overview](https://github.com/sally225/mywiki/blob/master/django_doc/ref/django-admin.py_and_manage.py.md) | Adding custom commands
 
-#Forms
+# Forms
 * **The basics**: [Overview](https://github.com/sally225/mywiki/blob/master/django_doc/forms/overview.md)
 
 # Other batteries included
