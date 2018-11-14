@@ -12,7 +12,7 @@
 
 # The view layer
 * **The basics**: [URLconfs](https://github.com/sally225/mywiki/blob/master/django_doc/urlconfs.md) | Veiw functions | Shortcuts | Decorators
-* **File uploads**: Overview | File objects | Storage API | [Managing Files](https://github.com/sally225/mywiki/blob/master/django_doc/topics/files.md) | Custom storage
+* **File uploads**: [Overview](https://github.com/sally225/mywiki/blob/master/django_doc/The%20view%20layer/file-upload-overview.md) | File objects | Storage API | [Managing Files](https://github.com/sally225/mywiki/blob/master/django_doc/topics/files.md) | Custom storage
 * **Generic views(1.3)**: [Overview](https://github.com/sally225/mywiki/blob/master/django_doc/The%20view%20layer/Generic_views-Overview.md) | Built-in generic views
 * **Class-based views**: [Overview](https://github.com/sally225/mywiki/blob/master/django_doc/The%20view%20layer/class-based-views_Overview.md) | [Built-in display views]()
 # The development process
