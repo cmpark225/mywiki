@@ -68,7 +68,7 @@ form의 생성자에 request.FILES를 전달해야 하는 것을 명심해라; �
 
 업로드 된 파일의 크기. bytes
 
-여기에 UploadedFile에서 이용 가능한 몇 가지 다른 메소드와 속성이 있다.; 자세한 내용은 [UploadedFile objects](https://django.readthedocs.io/en/1.3.X/topics/http/file-uploads.html#uploadedfile-objects)를 참조해라. 
+여기에 UploadedFile에서 이용 가능한 몇 가지 다른 메소드와 속성이 있다.; 자세한 내용은 아래 UploadedFile objects를 참조해라. 
 
 업로드 파일을 모두 처리하는 일반적인 방법은 아래와 같다:
 ```
@@ -114,9 +114,37 @@ File에서 상속 받은 것 외에도 모든 UploadedFile 객체는 다음 메�
 
 **UploadedFile.content_type**
 
+파일과 함께 업로드된 content-type 헤더. (e.g. text/plain or application/pdf) 사용자가 제공한 모든 데이터와 마찬가지로 업로드 된 파일이 실제로 이 유형이라는 사실을 믿어서는 안된다. 파일에 콘텐츠 형식 헤더의 "trust but verify(신뢰 가능한 하지만 확인이 필요한)" 라는 내용이 포함되어 있는지 확인해야 한다. 
+
 **UploadedFile.charset**
+
+text/* content-type의 경우 브라우저에서 제공하는 문자 집합(i.e utf8). 여기에서도 "trust but verify"가 가장 좋은 정책이다.  
 
 **UploadedFile.temporary_file_path**
 
-## Upload Handlers
+디스크에 업로드 된 파일만 이 method를 가진다.; 임시 업로드 파일의 전체 경로를 반환한다.
 
+## Upload Handlers
+사용자가 파일을 업로드하면 Django는 업로드된 파일 데이터를 처리하는 작은 클래스인 업로드 핸들러로 파일 데이터를 전달한다. 업로드 처리기는 기본적으로 FILE_UPLOAD_HANDLERS 설정에서 정의되며, 기본값은 아래와 같다:
+```
+("django.core.files.uploadhandler.MemoryFileUploadHandler", 
+"django.core.files.uploadhandler.TemporaryFileUploadHandler", )
+```
+MemoryFileUploadHandler와 TemporaryFileUploadHandler는 작은 파일을 메모리로 읽어 들이고 큰 파일을 디스크로 읽어들이는 Django의 기본 파일 업로드 동작을 제공한다.
+
+Django가 파일을 처리하는 방법을 커스텀하는 핸들러를 작성 할 수 있다. 예를 들어, 사용자 정의 할당량을 정의하고, 즉시 데이터를 압축하고, 진행률 막대를 렌더링하고, 데이터를 로컬에 저장하지 않고 직접 다른 저장 위치에 보낼 수 있는 사용자 정의 처리기를 사용 할 수 있다.
+
+### Modifying upload handlers on the fly
+가끔 특정 view는 다른 업로드 동작을 필요로한다. 이런 경우에,   request.upoad_handlers를 수정하여 request 마다 upload 핸들러를 override 할 수 있다. 기본적으로 이 목록은 FILE_UPLOAD_HANDLERS로 주어진 upload 핸들러를 포함하지만, 다른 list처럼 이 목록을 수정할 수 있다.  
+
+예를 들어, 일종의 AJAX 위젯에 업로드 진행에 대한 피드백을 제공하는 ProgressBarUploadHandler를 작성했다고 가정한다. 이 핸들러를 다음과 같이 업로드 핸들러에 추가한다:
+```
+request.upload_handlers.insert(0, ProgressBarUploadHandler())
+```
+progress bar 핸들러가 다른 핸들러보다 먼저 실행되어야하기 때문에 append() 대신 list.insert() 우선 사용을 원할 것이다. 업로드 핸들러ㄹ는 순서대로 처리되는 것을 기억해라.
+
+업로드 핸들러를 완전히 바꾸려면 새 목록을 할당하면 된다.
+
+```
+request.upload_handlers = [ProgressBarUploadHandler()]
+```
