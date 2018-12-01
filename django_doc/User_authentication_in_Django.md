@@ -181,7 +181,7 @@ Error: user 'user' does not exist
 password 속성을 직접 변경해서는 안된다. 
 
 
-###Storing additional information about users
+### Storing additional information about users
 만약 사용자와 연관된 추가적인 정보를 저장하고 싶다면 Django는 이 목적을 위해 사이트 별 관련 모델을 지정하는 방법을 제공한다. ("user profile")
 
 이 기능을 사용하려면 저장할 추가 정보 또는 사용 가능한 추가 방법에 대한 필드가 있는 모델을 정의하고 모델에서 사용자 모델에 OneToOneField 사용자를 추가한다. 이렇게 하면 각 사용자에 대해 모델의 인스턴스(instance)를 하나만 생성할 수 있다. (추가 정보가 있는 model을 생성하고 User를 OneToOneField로 지정하라는 말인듯)
