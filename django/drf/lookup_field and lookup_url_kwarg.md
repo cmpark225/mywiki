@@ -2,13 +2,13 @@ lookup_field , lookup_url_kwarg 차이점 확인
 
 lookup_field, lookup_url_kwarg 모두 GenericAPIView의 attributes다.
 
-### DRF문서 설명
+## DRF문서 설명
 
-##### lookup_field
+### lookup_field
 개별 모델 인스턴스의 개체 조회를 수행하는데 사용하는 모델 필드. 기본 값은 'pk'. 
 하이퍼링크된 API를 사용할 때 사용자 지정 값을 사용해야 하는 경우 API 보기와 serializer 클래스가 모두 룩업 필드를 설정하는지 확인해야 한다.
 
-##### lookup_url_kwarg
+### lookup_url_kwarg
 개체 조회에 사용해야 하는 URL 키워드 인수. URL conf에는 이 값에 해당하는 키워드 인수가 포함되어야 한다. 설정을 사용하지 않을 경우 lookup_field와 동일한 값을 사용한다.
 
 => 즉
@@ -16,7 +16,7 @@ lookup_field는 object를 조회할 필드를 지정하는 것이고,
 lookup_url_kwarg는 URL에서 capture된 변수의 이름을 지정하는 것이다.
 
 
-### 확인 내용 
+## 확인 내용 
 lookup_url_kwarg는 url의 kwargs에서 값을 가져오는데 사용한다.
 
 예를들어 
@@ -71,7 +71,7 @@ filter_kwargs = {
 }
 ```
 
-##### lookup_field로 설정된 field 값이 related field일 경우 
+### lookup_field로 설정된 field 값이 related field일 경우 PUT에서 에러 발생
 
 lookup_field로 설정된 related field 값을 업데이트 할 경우 
 해당 pk를 넘겨주면 ValueError가 발생한다.
