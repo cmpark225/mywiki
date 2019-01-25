@@ -719,3 +719,146 @@ class Board extends React.Component {
     );
   }
 ```
+
+
+Game 컴포넌트가 게임의 상태를 렌더링하기 때문에 Board의 렌더링 메소드에서 해당 코드를 제거 할 수 있다. 리팩토링 후, Board의 렌더링 함수는 다음과 같다:
+
+```
+ render() {
+    return (
+      <div>
+        <div className="board-row">
+          {this.renderSquare(0)}
+          {this.renderSquare(1)}
+          {this.renderSquare(2)}
+        </div>
+        <div className="board-row">
+          {this.renderSquare(3)}
+          {this.renderSquare(4)}
+          {this.renderSquare(5)}
+        </div>
+        <div className="board-row">
+          {this.renderSquare(6)}
+          {this.renderSquare(7)}
+          {this.renderSquare(8)}
+        </div>
+      </div>
+    );
+  }
+```
+
+마지막으로, 우리는 handleClick 메소드를  Board 컴포넌트에서 Game 컴포넌트로 옮겨야 한다. 그리고 Game 컴포넌트의 상태는 다르게 구성되어 있기 때문에 handleClick 수정도 필요하다. Game의 handleClick 메소드에서, 새로운 기록 항목을 연결해 기록에 추가한다. 
+
+```
+ handleClick(i) {
+    const history = this.state.history;
+    const current = history[history.length - 1];
+    const squares = current.squares.slice();
+    if (calculateWinner(squares) || squares[i]) {
+      return;
+    }
+    squares[i] = this.state.xIsNext ? 'X' : 'O';
+    this.setState({
+      history: history.concat([{
+        squares: squares,
+      }]),
+      xIsNext: !this.state.xIsNext,
+    });
+  }
+```
+
+여기에서 Board 컴포넌트는 renderSquare와 render 메소드만 필요하다. 게임 상태와 handleClick 메소드는 Game 컴포넌트에 있어야 한다.
+
+## Showing the Past Moves
+
+tic-tac-toe 게임의 기록을 저장한 이후, 우리는 이제 과거 움직임의 리스트를 플레이어에게 보여줄 수 있다.
+
+우리는 이전에 React 엘리먼트가 자바스크립트의 일급 객체인 사실을 배웠다. 우리는 응용 프로그램에서 그것들을 전달할 수 있다. 여러 항목을 렌더링 하라면 React 요소의 배열을 사용할 수 있다.
+
+자바스크립트에서, array는 보통 데이터를 다른 데이터에 매핑 하는데 사용하는 map() 메소드를 가진다. 예:
+
+```
+const numbers = [1, 2, 3];
+const doubled = numbers.map(x => x * 2); // [2, 4, 6]
+```
+
+map 메소드를 사용하여, 우리는 우리의 히스토리를 화면상의 버튼을 나타내는 React 요소에 매핑 할 수 있으며, 과거 움직임으로 "jump"를 위한 버튼 목록을 표시 할 수 있다. 
+
+Game의 render 메서드에서 역사를 살펴 보자.:
+
+```
+render() {
+    const history = this.state.history;
+    const current = history[history.length -1];
+    const winner = calculateWinner(current.squares);
+
+    const moves = history.map((step, move) => {
+        const desc = move ?
+            'Go to Move #' + move :
+            'Go to game start';
+        return (
+            <li>
+                <button onClick={() => this.jumpTo(move)}>{desc}</button>
+            </li>
+        );
+    });
+
+    let status;
+    if (winner) {
+        status = 'Winner: ' + winner;
+    } else {
+        status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+    }
+
+    return (
+        <div className="game">
+            <div className="game-board">
+                <Board
+                    squares={current.squares}
+                    onClick={(i) => this.handleClick(i)}
+                />
+            </div>
+            <div className="game-info">
+                <div>{status}</div>
+                <div>{moves}</div>
+            </div>
+        </div>
+    );
+}
+```
+
+tic-tac-toes 게임의 각 움직임을 위해, 우리는 <button>을 포함하는 <li> list를 생성했다. 버튼은 this.jumpTo() 메소드를 호출하는 onClick 핸들러를 포함한다. 아직 jumpTo() 메소드를 구현하지는 않았다. 지금 부터, 게임에서 발생한 동작의 리스트를 볼 수 있고 개발자 도구 콘솔에서 아래 warning 메시지도 볼 수 있다.
+
+> Warning: Each child in an array or iterator should have a unique "key" prop. Check the render method of "Game".
+
+이 warning이 의미하는 바를 논의해보자. 
+
+## Picking a Key
+
+리스트를 렌더링 할때, React는 각 렌더링된 각 리스트 항목에 대한 정보를 저장한다. 우리가 리스트를 업데이트 할때, React는 무엇이 변경되었는지를 결정해야 한다. 우리는 목록의 항목을 추가, 제거, 다시 정렬하거나 업데이트 할 수 있었다.
+
+```
+<li>Alexa: 7 tasks left</li>
+<li>Ben: 5 tasks left</li>
+```
+위에서 아래로 전환을 상상해봐라.
+
+```
+<li>Ben: 9 tasks left</li>
+<li>Claudia: 8 tasks left</li>
+<li>Alexa: 5 tasks left</li>
+```
+
+업데이트 카운트 이외에, 사람은 이것을 아마 Alexa와 Ben의 순서가 바뀌었고 Claudia가 Alexa와 Ben 사이에 추가되었다고 말할 것이다. 그러나 React는 컴퓨터 프로그램이며 우리가 의도한 바를 알지 못한다. React는 우리의 의도를 알 수 없기 때문에, 각 형제로부터 list 항목을 구별하기 위해 각 목록 항목에 key 속성을 명시해야 한다. 하나의 옵션은 alexa, ben, claudia 문자열을 사용하는 것이다. 데이터베이스의 데이터를 표시하는 경우, Alexa, Ben 그리고 Claudia의 데이터베이스 ID는 key로 사용할 수 있다.
+
+```
+<li key={user.id}> {user.name}: {user.taskCount} tasks left</li>
+```
+
+리스트가 리랜더링 될때, React는 각 리스트 항목의 key를 갖고 이전의 list 항목에서 매칭되는 키를 찾는다. 만약 현재 list가 이전에 없던 키를 가진다면, React는 컴포넌트를 생성한다. 만약 현재 list에 이전의 list에서 가지고 있던 키가 없다면, React는 이전의 컴포넌트를 제거한다. 만약 두개 키가 일치하면, 해당하는 컴포넌트는 이동된다. Key는 React에게 re-renders간에 상태를 유지하도록하는 각 구성 요소의 신원을 알려준다. 구성 요소의 키가 변경되면 구성 요소가 삭제되어 새로운 상태로 다시 작성된다. key는 React의 특별하고 예약 된 속성이다. (ref와 함께, ref도 예약 된 속성인가봄). 엘리먼트가 생성되었을때, React는 key 속성을 추출하고 반환 된 요소에 직접 key를 저장한다. key가 props에 속한 것 처럼 보여도, this.props.key를 사용하여 키를 참조 할 수 없다. React는 자동으로 키를 사용하여 업데이트 할 구성 요소를 결정한다. 구성 요소는 해당 key를 질의 할 수 없다.  
+
+**동적인 목록을 작성할 때마다 적절한 key를 할당하는 것이 좋다.** 적절한 키가 없다면 데이터 재구성을 고려해 볼 수 있다. 
+
+만약 명시된 키가 없다면, React는 waring을 보여주고 배열의 index를 기본 값으로 key를 사용할 것이다. 배열의 index로 키를 사용하는 것은 재 정렬이나 list 항목을 삽입/삭제를 시도할 경우 문제가 있다. Key={i}를 명시적으로 전달하면 warning은 사라지지만 배열 인덱스와 동일한 문제를 가지며 대부분의 경우 권장되지는 않는다. 
+
+key가 전역적으로 유니크할 필요는 없다; 컴포넌트와 그들의 형제 사이에서 유니크하면 된다. 
