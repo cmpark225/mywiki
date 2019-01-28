@@ -16,7 +16,7 @@
 * **Generic views(1.3)**: [Overview](https://github.com/sally225/mywiki/blob/master/django_doc/The%20view%20layer/Generic_views-Overview.md) | Built-in generic views
 * **Class-based views**: [Overview](https://github.com/sally225/mywiki/blob/master/django_doc/The%20view%20layer/class-based-views_Overview.md) | [Built-in display views]()
 # The development process
-* **settings**: Overview | [Full list of settings](https://github.com/sally225/mywiki/blob/master/django_doc/Settings.md)
+* **settings**: [Overview](https://github.com/sally225/mywiki/blob/master/django_doc/topics/settings.md) | [Full list of settings](https://github.com/sally225/mywiki/blob/master/django_doc/Settings.md)
 * **django-admin.py and manage.py**: [Overview](https://github.com/sally225/mywiki/blob/master/django_doc/ref/django-admin.py_and_manage.py.md) | Adding custom commands
 
 # Forms
