@@ -14,7 +14,7 @@
 - [x] [5. State and Lifecycle](https://github.com/sally225/mywiki/blob/master/react/doc/MAIN_CONCEPTS/5.State%20and%20Lifecycle.md)
 - [x] [6. Handling Events](https://github.com/sally225/mywiki/blob/master/react/doc/MAIN_CONCEPTS/6.Handling%20Events.md)
 - [x] [7. Conditional Rendering](https://github.com/sally225/mywiki/blob/master/react/doc/MAIN_CONCEPTS/7.Conditional%20Rendering.md)
-- [ ] 8. Lists and Keys
+- [x] [8. Lists and Keys](https://github.com/sally225/mywiki/blob/master/react/doc/MAIN_CONCEPTS/8.List%20and%20Keys.md)
 - [ ] 9. Forms
 - [x] [10. Lifting State Up](https://github.com/sally225/mywiki/blob/master/react/doc/MAIN_CONCEPTS/a10.Lifting%20State%20up.md)
 - [ ] 11. Composition vs Inheritance
