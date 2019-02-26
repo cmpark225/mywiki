@@ -140,3 +140,7 @@ job의 상트를 클릭하여, 해당 job의 로그를 볼 수 있다. 이것은
 ![build_log](https://docs.gitlab.com/ee/ci/quick_start/img/build_log.png)
 
 Commit 및 Merge 요청과 같은 GitLab의 다양한 페이지에서 커밋 상태를 볼 수도 있다
+
+
+
+https://docs.gitlab.com/ee/ci/quick_start/README.html
