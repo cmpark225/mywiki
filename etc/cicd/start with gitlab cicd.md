@@ -144,3 +144,8 @@ Commit 및 Merge 요청과 같은 GitLab의 다양한 페이지에서 커밋 상
 
 
 https://docs.gitlab.com/ee/ci/quick_start/README.html
+
+세줄요약 
+> gitlab CI/CD를 사용하기 위해서는 .gitlab-ci.yml 파일과 해당 내용을 실행할 Runner가 필요하다.  
+> .gitlab-ci.yml 파일이 있을 경우, 푸시나 커밋이 될 때마다 Runner 작업을 실행한다. 
+> pipline 이나 job을 확인하기 위해서는 pipeline 페이지에서 확인한다
