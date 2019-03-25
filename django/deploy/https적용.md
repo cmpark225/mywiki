@@ -137,6 +137,13 @@ restart 서버 재시작
 a2enmod를 이용해 모듈을 on off 할 경우 restart를 안내한다고 한다.
 
 
+# 인증서 갱신
+
+ ```
+ sudo letsencrypt renew
+ ```
+ 
+ 갱신 실패 시 아파치 멈추
 
 
 ## 확인
