@@ -55,7 +55,7 @@ class PBKDF2WrappedSHA1PasswordHasher(PBKDF2PasswordHasher):
 
 
 2. data migration 
-sha1인 사용자의 비밀번호를 sha256dmfh qusrudgksek.
+sha1인 사용자의 비밀번호를 sha256으로 변경한다
 
 ```
 from django.contrib.auth.models import User
