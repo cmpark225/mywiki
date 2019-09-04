@@ -20,6 +20,14 @@ True로 설정하면 요청 URL이 URLconf의 패턴과 일치하지 않고 슬�
 
 APPEND_SLASH 설정은 CommonMiddleware가 설치된 경우에만 사용(미들웨어 참조).
 
+## DATABASE_ROUTERS
+
+Default: [] (Empty list)
+
+데이터베이스 쿼리를 수행할 때 사용할 데이터베이스를 결정하는데 사용되는 라우터 목록.
+
+[다중 데이터베이스 설정에서의 자동 데이터베이스 라우팅 문서](https://django.readthedocs.io/en/1.3.X/topics/db/multi-db.html#topics-db-multi-db-routing)를 참조.
+
 ## LOCALE_PATHS
 
 Default: () (Empty tuple)
@@ -85,4 +93,3 @@ internationalization 시스템을 사용할 것인지에 대한 boolean 값이�
 Default: False 
 
 데이터가 기본적으로 지역화되는지 여부를 지정하는 boolean 값이다. True로 설정되어 있을 경우 Django는 숫자와 날짜를 현재 locale 포맷으로 출력할 것이다.
-
