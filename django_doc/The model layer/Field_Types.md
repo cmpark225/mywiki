@@ -19,3 +19,22 @@ True일 경우 필드는 blank를 허용한다. Default는 False.
 
 null과는 다르다. **null은 데이터베이스와 연관되어 있고, blank는 유효성과 연관되어 있다.**
 field가 blank=True라면 *Django admin 페이지에서* 유효성 검사 시 빈 값을 허용한다. field가 blank=False일 경우 필요한 필드이다.
+
+### ManyToManyField
+
+*ManyToManyField.through*
+
+Django는 many-to-many 관계를 관리하기 위해 자동으로 생성한다. 하지만 intermediary 테이블을 수동으로 명시하고 싶을 경우, 사용하기 위한 intermediate 테이블을 나타내는 Django model을 명시하기 위해 through 옵션을 사용할 수 있다.
+
+이 옵션의 가장 일반적인 용도는 [다대다 관계에 추가 데이터](https://django.readthedocs.io/en/1.3.X/topics/db/models.html#intermediary-manytomany)를 연결하려는 경우 이다.
+
+
+
+
+
+
+
+
+
+
+
