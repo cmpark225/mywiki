@@ -23,7 +23,7 @@
 * **django-admin.py and manage.py**: [Overview](https://github.com/sally225/mywiki/blob/master/django_doc/ref/django-admin.py_and_manage.py.md) | Adding custom commands
 
 # Forms
-* **The basics**: [Overview](https://github.com/sally225/mywiki/blob/master/django_doc/forms/overview.md)
+* **The basics**: [Overview](https://github.com/sally225/mywiki/blob/master/django_doc/forms/overview.md) | [Form API](https://github.com/sally225/mywiki/blob/master/django_doc/forms/api.md)
 
 # Other batteries included
 * [Admin site](https://github.com/sally225/mywiki/blob/master/django_doc/The_Django_admin_site.md) | [Admin actions](https://github.com/sally225/mywiki/blob/master/django_doc/Admin_actions.md) | Admin documentation generator
