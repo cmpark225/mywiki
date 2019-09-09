@@ -1,4 +1,3 @@
-15:36:26
 # The Forms API
 
 ## Bound and unbound forms
