@@ -1,9 +1,66 @@
 
 ## ModelAdmin objects
 
+class **ModelAdmin**
+
+ModelAdmin 클래스는 관리자 인터페이스에서 모델을 나타낸다. 어플리케이션에 admin.py 파일로 저장된다. ModelAdmin의 간단한 예제를 보자:
+
+```
+from django.contrib import admin
+from myproject.myapp.models import Author
+
+class AuthorAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.register(Author, AuthorAdmin)
+```
+
+
+> Do you need a ModelAdmin object at all?
+> 이전의 예제에서, ModelAdmin 클래스는 어떤 커스텀 값을 가지지 않는다(아직). 결과적으로 기본 관리자 인터페이스가 제공된다. 기본 관리자 인터페이스가 괜찮다면, ModelAdmin을 정의하지 않아도 된다. -- ModelAdmin 설명을 제공하지 않고 모델 클래스를 등록 할 수 있다. 앞의 예를 다음과 같이 단순화 할 수 있다.
+
+```
+from django.contrib import admin
+from myproject.myapp.models import Author
+
+admin.site.register(Author)
+```
+
+
 ### ModelAdmin options
+
+ModelAdmin은 매우 유연하다. 인터페이스를 다루기 위한 몇가지 옵션이 있다. 모든 옵션은 ModelAdmin의 하위 클래스에서 정의된다. 
+
+```
+class AuthorAdmin(admin.ModelAdmin):
+    date_hierarchy = 'pub_date'
+```
+
+**ModelAdmin.exclude**
+
+이 속성이 제공될 경우, form에서 제외되어야 할 필드이름의 리스트여야 한다.
+
+예를들어 아래 모델에 대해서:
+```
+class Author(models.Model):
+    name = models.CharField(max_length=100)
+    title = models.CharField(max_length=3)
+    birth_date = models.DateField(blank=True, null=True)
+```
+
+name과 title 필드만을 포함하는 Author 모델의 form을 원할경우, fields나 exclude를 아래와 같이 작성할 수 있다:
+```
+class AuthorAdmin(admin.modelAdmin):
+    fields = ('name', 'title')
+
+class AuthorAdmin(admin.ModelAdmin):
+    exclude = ('birth_date', )
+```
+모델읃 name, title, birth_date 세개의 필드만 가지고 있으므로, 위에 선언된 form 결과는 같은 필드를 가질 것이다.
+
 **ModelAdmin.list_display**
-admin의 change list 페이지에서 표시되는 필드들을 컨드롤하기 위해 list_display를 설정한다. 
+
+admin의 change list 페이지에서 표시되는 필드들을 컨트롤하기 위해 list_display를 설정한다. 
 
 EX:
 ```
@@ -35,7 +92,7 @@ class PersonAdmin(admin.ModelAdmin):
   return ("%s %s" % (obj.first_name, obj.last_name)).upper()
 upper_case_name.short_description = "Name"
 ```
-* 모델의 속성을 나타내는 문자열입니다. 이 함수는 호출 가능 함수와 거의 동일하게 동작하지만이 컨텍스트에서는 모델 인스턴스를 가리킨다. 아래는 완전한 모델 예제이다.
+* 모델의 속성을 나타내는 문자열이다. 이 함수는 호출 가능 함수와 거의 동일하게 동작하지만이 컨텍스트에서는 모델 인스턴스를 가리킨다. 아래는 완전한 모델 예제이다.
 ```
 class Person(models.Model):
   name = models.CharField(max_length=50)
