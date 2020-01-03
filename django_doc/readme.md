@@ -29,5 +29,6 @@
 * [Admin site](https://github.com/sally225/mywiki/blob/master/django_doc/The_Django_admin_site.md) | [Admin actions](https://github.com/sally225/mywiki/blob/master/django_doc/Admin_actions.md) | Admin documentation generator
 * [Authentication](https://github.com/sally225/mywiki/blob/master/django_doc/User_authentication_in_Django.md)
 * [Cache system](https://github.com/sally225/mywiki/blob/master/django_doc/topics/cache-system.md)
-* [Web design helpers](https://github.com/sally225/mywiki/blob/master/django_doc/ref/controb/webdesign.md)
+* [Cross Site Request Forgery protection] (https://github.com/sally225/mywiki/blob/master/django_doc/ref/contrib/csrf.md)
+* [Web design helpers](https://github.com/sally225/mywiki/blob/master/django_doc/ref/contrib/webdesign.md)
 * [Signals](https://github.com/sally225/mywiki/tree/master/django_doc/topics/signals.md)
