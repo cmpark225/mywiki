@@ -167,7 +167,6 @@ class UserListView(generics.ListAPIView):
 ```
 
 ordering 속성은 string이나 string으로 이루어진 list/tuple 이다.
-
 ## Custom generic filtering
 일반적인 filtering backend를 제공하거나, 다른 개발자가 사용하기 위한 설치 가능한 app을 작성할 수 있다. 
 
